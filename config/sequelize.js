@@ -6,7 +6,7 @@ const { database, username, password } = config.db;
 const sequelize = new Sequelize(
     database, username, password, {
         host: config.db.host,
-        dialect: config.db.dialect,
+        dialect: 'postgres',
         ssl: true
     }
 );
