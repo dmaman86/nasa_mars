@@ -7,9 +7,14 @@ const { database, username, password, host, dialect } = config.db;
 let sequelize;
 
 if(process.env.NODE_ENV === 'production'){
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
-        dialectOptions:{
-            ssl: true
+    sequelize = new Sequelize(`${process.env.DATABASE_URL}?sslmode=require`, {
+        url: process.env.DATABASE_URL,
+        dialect: 'postgres',
+        logging: false,
+        dialectOptions: {
+            ssl: {
+            rejectUnauthorized: false, // very important
+            }
         }
     });
 }else{
