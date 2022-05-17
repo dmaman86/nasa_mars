@@ -16,8 +16,6 @@ require('dotenv').config({path: 'variables.env'});
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-// var host = process.env.HOST || '0.0.0.0';
-
 /**
  * Create HTTP server.
  */
