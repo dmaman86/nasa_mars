@@ -10,3 +10,5 @@ const sequelize = new Sequelize(
         ssl: true
     }
 );
+
+module.exports = sequelize;
