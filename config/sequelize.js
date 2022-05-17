@@ -26,12 +26,5 @@ if(process.env.NODE_ENV === 'production'){
         }
     )
 }
-/*const sequelize = new Sequelize(
-    database, username, password, {
-        host: host,
-        dialect: dialect,
-        ssl: true
-    }
-);*/
 
 module.exports = sequelize;
