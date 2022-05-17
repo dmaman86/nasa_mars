@@ -1,0 +1,237 @@
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="bg-image p-5 shadow-1-strong rounded mb-5"
+                 style="background-image: url('/images/nasa_mars.jpeg'); background-position: center right;">
+        
+                <blockquote class="blockquote col text-center text-white">
+                        <h1 class="mb-3 h1">Mars images browser</h1>
+                        <footer class="footer h5">Browse NASA Mars images and save your preferred ones</footer>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                            who am i
+                        </button>
+                </blockquote>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-grid gap-3">
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <div class="p-2 bd-highlight">
+                    <form id="log-out" method="get" action="api/logout">
+                        <button type="submit" class="btn btn-outline-danger">Log Out</button>
+                    </form>
+                </div>
+                <div class="p-2 bd-highlight h4">Welcome <%- user.firstName %> <%- user.lastName %></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div id="search">
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <!-- Form here -->
+                <div class="p-2 alert alert-secondary fs-3 text-center" role="alert">Search for images</div>
+
+                <div class="container">
+                    <form class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="dateInput" class="form-label">Date(YYYY-MM-DD) or Sol</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="dateInput"
+                                   name="dateInput"
+                                   required>
+                            <div class="text-danger errormessage"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mission" class="form-label">Select Mission</label>
+                            <select class="form-select" id="mission" aria-label="Default select example">
+                                <option selected value="">Choose a mission</option>
+                                <option value="Curiosity">Curiosity</option>
+                                <option value="Opportunity">Opportunity</option>
+                                <option value="Spirit">Spirit</option>
+                            </select>
+                            <div class="text-danger errormessage"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="camera" class="form-label">Select Camera</label>
+                            <select class="form-select" id="camera" aria-label="Default select example">
+                                <option selected value="">Choose a camera</option>
+                                <option value="FHAZ">FHAZ</option>
+                                <option value="RHAZ">RHAZ</option>
+                                <option value="MAST">MAST</option>
+                                <option value="CHEMCAM">CHEMCAM</option>
+                                <option value="MAHLI">MAHLI</option>
+                                <option value="MARDI">MARDI</option>
+                                <option value="NAVCAM">NAVCAM</option>
+                                <option value="PANCAM">PANCAM</option>
+                                <option value="MINITES">MINITES</option>
+                            </select>
+                            <div class="text-danger errormessage"></div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-secondary" id="search_img">search</button>
+                        <button type="button" class="btn btn-outline-secondary" id="clear_form">clear</button>
+                    </form>
+                </div>
+                <br>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <!-- saved images here -->
+                <div class="p-2 alert alert-primary fs-3 text-center" role="alert">Saved Images</div>
+                <div class="container">
+                    <form id="options-list">
+                        <button type="button" class="btn btn-primary" id="edit">Edit List</button>
+                        <button type="submit" class="btn btn-danger" id="clearList" hidden>Clear List</button>
+                        <button type="button" class="btn btn-secondary" id="end-edit" hidden>End Edit List</button>
+                        <button type="button" class="btn btn-outline-info" id="start_slide">Start Slide Show</button>
+                        <button type="button" class="btn btn-outline-info" id="stop_slide">Stop Slide Show</button>
+
+                        <ul id="images_selected">
+
+                        </ul>
+                    </form>
+                </div>
+                <br>
+            </div>
+        </div>
+        <br>
+        <div class="row align-items-center">
+            <!-- slide show here -->
+            <div class="col">
+                <div class="container" id="carousel">
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators" id="indicators">
+
+                        </div>
+                        <div class="carousel-inner" id="carousel-items">
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="row-md-12">
+                <div class="p-2 alert alert-secondary fs-3 text-center" role="alert">Search results</div>
+            </div>
+            <div class="row-md-12">
+                <div class="row row-cols-1 row-cols-md-3 g-4" id="rovers_photos">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal whoim -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-success opacity-75">
+                <h4 class="modal-title">Personal Details</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h6>Name: David Alejandro Maman</h6>
+                <h6>Email: davidmaman@edu.hac.ac.il</h6>
+                <h6>ID: 327437422</h6>
+                <h6>Name: Yinon Tzomi</h6>
+                <h6>Email: yinontz@edu.hac.ac.il</h6>
+                <h6>ID: 208489369</h6>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End The Modal whoim -->
+
+<!-- The Modal Save Image -->
+<div class="modal" id="modal_save">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-success opacity-75">
+                <h4 class="modal-title">Information</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h6></h6>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close_found">ok</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End The Modal Save Image -->
+
+<!-- modal loading -->
+<div class="modal" id="loading" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src='/images/loading-buffering.gif' class="rounded mx-auto d-block" alt="loading">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal loading -->
+
+<!-- Modal Confirm Delete -->
+<div class="modal" id="confirm-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p class="h4"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Reject</button>
+                <button type="button" class="btn btn-danger">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Confirm Delete -->
+
+<!-- Modal Confirm Delete All -->
+<div class="modal" id="confirm-modal-all" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p class="h4">Are you sure you want to delete everything?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Reject</button>
+                <button type="button" id="accept-btn-all" class="btn btn-danger">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Confirm Delete All -->
