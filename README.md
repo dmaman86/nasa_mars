@@ -1,5 +1,3 @@
-# Project Demo:
-This site was built using [Heroku](https://nasa-mars-images.herokuapp.com/login)
 # Initialization:
 ```
 Open console, execute : npm install
